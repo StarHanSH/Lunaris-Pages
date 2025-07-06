@@ -7,7 +7,7 @@ export const cardMember = {
   members: [
     {
       role: "团长",
-      name: "@GEEKER TD / @晓寒Xiaohan",
+      name: "测试/ @晓寒Xiaohan",
       icon: "fas fa-crown"
     },
     {
