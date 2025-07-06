@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>星寒工作室StarHanCN</title>
+  <!-- 引入OPPO Sans字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* 全局样式 - 使用OPPO Sans字体 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #ffe0f0, #f8bbd0, #e1bee7, #c5cae9);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #4a148c;
+      min-height: 100vh;
+      padding: 40px 20px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* 背景动画 */
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* 容器样式 */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    /* 工作室Logo区域 */
+    .logo-section {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+      animation: float 3s ease-in-out infinite;
+      position: relative;
+      z-index: 10;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 30px rgba(171, 71, 188, 0.3);
+    }
+    
+    .logo:hover {
+      transform: rotate(15deg) scale(1.1);
+      box-shadow: 0 15px 40px rgba(171, 71, 188, 0.4);
+    }
+    
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: drop-shadow(0 5px 10px rgba(142, 36, 170, 0.2));
+    }
+
+    /* 头部标题 */
+    .hero {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 0 20px;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .hero h1 {
+      font-size: 3.2rem;
+      background: linear-gradient(45deg, #ec407a, #ab47bc, #7e57c2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+      letter-spacing: 1.5px;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 0.8s ease-out;
+      font-weight: 700;
+    }
+    
+    .hero p {
+      font-size: 1.3rem;
+      color: #6a1b9a;
+      animation: fadeInUp 1s ease-out;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 卡片样式 - 奶白色 */
+    .card {
+      background: rgba(255, 250, 245, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      padding: 30px;
+      margin-bottom: 30px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(248, 187, 208, 0.3);
+      backdrop-filter: blur(5px);
+      z-index: 10;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #ec407a, #ab47bc);
+      opacity: 0.9;
+      transition: all 0.4s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card:hover::before {
+      height: 8px;
+      opacity: 1;
+    }
+    
+    .card h2 {
+      font-size: 1.8rem;
+      color: #8e24aa;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px dashed #f8bbd0;
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+    }
+    
+    .card h2 i {
+      margin-right: 12px;
+      color: #ec407a;
+      font-size: 1.5rem;
+    }
+    
+    .card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .card li {
+      margin-bottom: 15px;
+      padding-left: 35px;
+      position: relative;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    
+    .card li::before {
+      content: '★';
+      position: absolute;
+      left: 0;
+      color: #ec407a;
+      font-size: 1.1rem;
+      top: 3px;
+    }
+    
+    /* 团队核心成员卡片样式 */
+    .team-member {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      margin-bottom: 15px;
+      background: rgba(248, 187, 208, 0.15);
+      border-radius: 12px;
+      transition: all 0.4s ease;
+      border: 1px solid rgba(236, 64, 122, 0.1);
+    }
+    
+    .team-member:hover {
+      transform: translateX(8px);
+      background: rgba(248, 187, 208, 0.25);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .member-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 18px;
+      color: white;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 10px rgba(171, 71, 188, 0.3);
+    }
+
+    /* 联系方式卡片 */
+    .contact-card {
+      background: rgba(255, 250, 245, 0.95);
+      border: 2px solid #f8bbd0;
+    }
+    
+    /* 超链接样式 - 粗体无下划线 */
+    a {
+      display: inline-block;
+      margin-top: 12px;
+      color: #8e24aa;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      padding: 8px 0;
+      position: relative;
+    }
+    
+    a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ec407a;
+      transition: width 0.3s ease;
+    }
+    
+    a:hover {
+      color: #ec407a;
+    }
+    
+    a:hover::after {
+      width: 100%;
+    }
+    
+    /* 友链卡片样式 */
+    .friend-card {
+      background: rgba(255, 250, 245, 0.95);
+      border: 2px dashed #ab47bc;
+    }
+    
+    .friend-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 25px;
+    }
+    
+    .friend-link {
+      background: rgba(248, 187, 208, 0.15);
+      border-radius: 15px;
+      padding: 20px;
+      width: 100%;
+      max-width: 320px;
+      transition: all 0.4s ease;
+      border: 1px solid rgba(142, 36, 170, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .friend-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #7e57c2, #ab47bc);
+      opacity: 0.8;
+      transition: height 0.3s ease;
+    }
+    
+    .friend-link:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      background: rgba(248, 187, 208, 0.2);
+      border-color: rgba(142, 36, 170, 0.2);
+    }
+    
+    .friend-link:hover::before {
+      height: 6px;
+    }
+    
+    .friend-link h3 {
+      font-size: 1.25rem;
+      color: #6a1b9a;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+    }
+    
+    .friend-link h3 i {
+      margin-right: 10px;
+      color: #ec407a;
+      font-size: 1.2rem;
+    }
+    
+    .friend-link a {
+      display: block;
+      background: rgba(171, 71, 188, 0.08);
+      padding: 10px 18px;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #7e57c2;
+      transition: all 0.3s ease;
+    }
+    
+    .friend-link a:hover {
+      background: rgba(171, 71, 188, 0.15);
+      color: #5e35b1;
+    }
+    
+    .warning-note {
+      background: rgba(236, 64, 122, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      border-left: 5px solid #ec407a;
+      font-size: 1.05rem;
+    }
+    
+    .warning-note i {
+      color: #ec407a;
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+    
+    /* 响应式布局 */
+    @media (min-width: 768px) {
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+      }
+      
+      .contact-card, .friend-card {
+        grid-column: span 2;
+      }
+      
+      .friend-links {
+        justify-content: space-between;
+      }
+      
+      .friend-link {
+        width: calc(50% - 15px);
+      }
+    }
+    
+    @media (min-width: 992px) {
+      .friend-link {
+        width: calc(33.333% - 15px);
+      }
+    }
+    
+    /* 页脚样式 */
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding: 25px;
+      color: #6a1b9a;
+      font-size: 1rem;
+      border-top: 1px solid rgba(142, 36, 170, 0.2);
+      background: rgba(255, 250, 245, 0.7);
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+      position: relative;
+      z-index: 10;
+    }
+    
+    /* 装饰元素 */
+    .decoration {
+      position: absolute;
+      z-index: 1;
+      opacity: 0.3;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .decoration.circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ec407a, #ab47bc);
+      top: 10%;
+      left: 5%;
+    }
+    
+    .decoration.square {
+      width: 100px;
+      height: 100px;
+      transform: rotate(45deg);
+      background: linear-gradient(135deg, #c5cae9, #e1bee7);
+      bottom: 10%;
+      right: 7%;
+    }
+    
+    .decoration.triangle {
+      width: 0;
+      height: 0;
+      border-left: 70px solid transparent;
+      border-right: 70px solid transparent;
+      border-bottom: 120px solid rgba(126, 87, 194, 0.3);
+      top: 25%;
+      right: 5%;
+      transform: rotate(30deg);
+    }
+    
+    /* 动画效果 */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .pulse {
+      animation: pulse 3s infinite;
+    }
+    
+    /* 工作室口号 */
+    .slogan {
+      text-align: center;
+      font-size: 1.25rem;
+      margin: 20px 0 30px;
+      color: #8e24aa;
+      font-weight: bold;
+      letter-spacing: 3px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      display: inline-block;
+      padding: 0 20px;
+    }
+    
+    .slogan::before, .slogan::after {
+      content: "✦";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ec407a;
+      font-size: 1.2rem;
+    }
+    
+    .slogan::before {
+      left: 0;
+    }
+    
+    .slogan::after {
+      right: 0;
+    }
+    
+    /* 社交链接 */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 30px;
+    }
+    
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      color: white;
+      font-size: 1.8rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 5px 15px rgba(171, 71, 188, 0.3);
+    }
+    
+    .social-link:hover {
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 10px 25px rgba(171, 71, 188, 0.4);
+    }
+    
+    /* 水波动画 */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(236, 64, 122, 0.1);
+      transform: scale(0);
+      animation: ripple 3s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    @keyframes ripple {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+    
+    /* 工作室标语 */
+    .motto {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #7e57c2;
+      margin-top: 10px;
+      font-style: italic;
+    }
+    
+    /* 加载指示器 */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-size: 1.5rem;
+      color: #6a1b9a;
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景装饰元素 -->
+  <div class="decoration circle"></div>
+  <div class="decoration square"></div>
+  <div class="decoration triangle"></div>
+  
+  <div class="container" id="container">
+    <div class="loading">
+      <i class="fas fa-spinner fa-spin"></i> 正在加载配置...
+    </div>
+  </div>
+
+  <footer id="footer"></footer>
+
+  <script type="module">
+    // 页面加载后立即执行
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        // 1. 加载主配置
+        const mainConfig = await import('./main.js');
+        
+        // 动态设置页面标题
+        document.title = mainConfig.title;
+        
+        // 2. 应用字体配置
+        const style = document.createElement('style');
+        style.textContent = `
+          @font-face {
+            font-family: '${mainConfig.font.name}';
+            src: url('${mainConfig.font.path}') format('${mainConfig.font.format}');
+            font-weight: normal;
+            font-style: normal;
+          }
+          * { font-family: '${mainConfig.font.name}', sans-serif; }
+        `;
+        document.head.appendChild(style);
+        
+        // 3. 按顺序加载卡片配置
+        const cardConfigs = [];
+        for (const cardFile of mainConfig.cardConfigs) {
+          const cardModule = await import(`./${cardFile}`);
+          const cardConfig = Object.values(cardModule)[0];
+          cardConfigs.push(cardConfig);
+        }
+        
+        // 4. 渲染页面结构
+        renderPage(mainConfig, cardConfigs);
+        
+        // 5. 应用交互效果
+        setupInteractions();
+      } catch (error) {
+        console.error('加载配置失败:', error);
+        document.querySelector('#container').innerHTML = `
+          <div class="error">
+            <h2>配置加载失败</h2>
+            <p>${error.message}</p>
+          </div>
+        `;
+      }
+    });
+    
+    // 渲染整个页面
+    function renderPage(mainConfig, cardConfigs) {
+      const container = document.querySelector('#container');
+      
+      // 创建页面结构
+      container.innerHTML = `
+        <div class="logo-section"></div>
+        <div class="hero"></div>
+        <div class="grid"></div>
+      `;
+      
+      // 渲染Logo
+      const logoSection = container.querySelector('.logo-section');
+      const logoDiv = document.createElement('div');
+      logoDiv.className = 'logo';
+      logoDiv.innerHTML = `
+        
+      `;
+      logoSection.appendChild(logoDiv);
+      
+      // 渲染头部内容
+      const heroSection = container.querySelector('.hero');
+      heroSection.innerHTML = `
+        <h1>${mainConfig.header.h1}</h1>
+        <p>${mainConfig.header.p}</p>
+        <div class="slogan">${mainConfig.header.slogan}</div>
+      `;
+      
+      // 渲染卡片
+      const gridSection = container.querySelector('.grid');
+      
+      cardConfigs.forEach(cardConfig => {
+        let cardContent = '';
+        
+        // 根据卡片类型生成对应内容
+        switch (cardConfig.type) {
+          case 'basic':
+            cardContent = renderBasicCard(cardConfig);
+            break;
+          case 'history':
+            cardContent = renderHistoryCard(cardConfig);
+            break;
+          case 'feature':
+            cardContent = renderFeatureCard(cardConfig);
+            break;
+          case 'member':
+            cardContent = renderMemberCard(cardConfig);
+            break;
+          case 'friend':
+            cardContent = renderFriendCard(cardConfig);
+            break;
+          case 'contact':
+            cardContent = renderContactCard(cardConfig);
+            break;
+          default:
+            cardContent = `<div class="card"><h2><i class="${cardConfig.icon}"></i> ${cardConfig.title}</h2><p>未定义卡片类型</p></div>`;
+        }
+        
+        gridSection.innerHTML += cardContent;
+      });
+      
+      // 渲染页脚
+      const footerSection = document.querySelector('#footer');
+      footerSection.innerHTML = `
+        <p>${mainConfig.footer.text}</p>
+        <p>${mainConfig.footer.motto}</p>
+        <a href="${mainConfig.footer.icp.link}" target="_blank">${mainConfig.footer.icp.text}</a>
+      `;
+    }
+    
+    // 卡片渲染函数
+    function renderBasicCard(card) {
+      return `
+        <div class="card">
+          <h2><i class="${card.icon}"></i> ${card.title}</h2>
+          <ul>
+            ${card.items.map(item => `<li>${item}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+    }
+    
+    function renderHistoryCard(card) {
+      return `
+        <div class="card">
+          <h2><i class="${card.icon}"></i> ${card.title}</h2>
+          <ul>
+            ${card.items.map(item => `<li>${item}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+    }
+    
+    function renderFeatureCard(card) {
+      return `
+        <div class="card">
+          <h2><i class="${card.icon}"></i> ${card.title}</h2>
+          <ul>
+            ${card.items.map(item => `<li>${item}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+    }
+    
+    function renderMemberCard(card) {
+      return `
+        <div class="card">
+          <h2><i class="${card.icon}"></i> ${card.title}</h2>
+          <div class="team-members">
+            ${card.members.map(member => `
+              <div class="team-member">
+                <div class="member-icon" style="background: linear-gradient(135deg, #ec407a, #ab47bc);">
+                  <i class="${member.icon}"></i>
+                </div>
+                <div>
+                  <strong>${member.role}</strong>
+                  <p>${member.name}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+    
+    function renderFriendCard(card) {
+      return `
+        <div class="card friend-card">
+          <h2><i class="${card.icon}"></i> ${card.title}</h2>
+          <div class="warning-note">
+            <i class="fas fa-exclamation-triangle"></i>${card.warning}
+          </div>
+          <div class="friend-links">
+            ${card.links.map(link => `
+              <div class="friend-link">
+                <h3><i class="${link.icon}"></i> ${link.title}</h3>
+                ${link.urls.map(url => `<a href="${url.href}" target="_blank">${url.text}</a>`).join('')}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+    
+    function renderContactCard(card) {
+      return `
+        <div class="card contact-card">
+          <h2><i class="${card.icon}"></i> ${card.title}</h2>
+          ${card.emails.map(email => `
+            <p>${email.label}：<a href="mailto:${email.address}">${email.text}</a></p>
+          `).join('')}
+          <div class="social-links" id="social-links"></div>
+        </div>
+      `;
+    }
+    
+    // 设置交互效果
+    function setupInteractions() {
+      // 卡片入场动画
+      const cards = document.querySelectorAll('.card');
+      
+      cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, 200 + index * 200);
+      });
+      
+      // 背景装饰动画
+      const decorations = document.querySelectorAll('.decoration');
+      decorations.forEach((dec, index) => {
+        dec.style.animation = `float ${6 + index * 2}s ease-in-out infinite`;
+      });
+      
+      // 友链卡片悬停效果
+      const friendLinks = document.querySelectorAll('.friend-link');
+      friendLinks.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+          link.classList.add('pulse');
+        });
+        
+        link.addEventListener('mouseleave', () => {
+          link.classList.remove('pulse');
+        });
+      });
+      
+      // 创建水波动画
+      function createRipple(e) {
+        const ripple = document.createElement('div');
+        ripple.className = 'ripple';
+        ripple.style.left = e.clientX + 'px';
+        ripple.style.top = e.clientY + 'px';
+        document.body.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 3000);
+      }
+      
+      // 添加点击水波效果
+      document.addEventListener('click', function(e) {
+        createRipple(e);
+      });
+    }
+  </script>
+</body>
+</html>
