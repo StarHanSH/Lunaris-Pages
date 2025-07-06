@@ -14,7 +14,7 @@ const word_last = "word";
 const logo = "logo.png";
 
 // 背景渐变颜色配置 (CSS渐变语法)
-const color_background = "linear-gradient(135deg, #a0d2eb, #e2eafc, #d0bdf4)";
+const color_background = "#d0bdf4";
 
 // 字体文件名（放在根目录）
 const font = "font.ttf";
