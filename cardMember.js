@@ -6,34 +6,9 @@ export const cardMember = {
   icon: "fas fa-users",
   members: [
     {
-      role: "团长",
-      name: "测试/ @晓寒Xiaohan",
+      role: "文本",
+      name: "文本",
       icon: "fas fa-crown"
-    },
-    {
-      role: "副团长/HR",
-      name: "@星空ちゃん",
-      icon: "fas fa-user-tie"
-    },
-    {
-      role: "管理员",
-      name: "@ZBookZ书",
-      icon: "fas fa-user-cog"
-    },
-    {
-      role: "美术设计",
-      name: "@鸥麦尬德懵懵懵",
-      icon: "fas fa-paint-brush"
-    },
-    {
-      role: "星火团队协管",
-      name: "@StarFire",
-      icon: "fas fa-user-friends"
-    },
-    {
-      role: "宏星工作室协管",
-      name: "@夏辉",
-      icon: "fas fa-hands-helping"
     }
   ]
 };
