@@ -10,4 +10,4 @@
 ![config](https://badgen.net/badge/Config/JavaScript/green/)
 ![team](https://badgen.net/badge/Team/StarHan-Global/pink/)
 
->未完工
+>未完工,本项目代码未经过测试，请谨慎下载（发布1.0之前）
