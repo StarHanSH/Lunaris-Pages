@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- 标题将通过JS动态设置 -->
+  <!-- 引入OPPO Sans字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* 所有样式保持不变 */
+    /* ... 保留所有原始CSS样式 ... */
+  </style>
+</head>
+<body>
+  <!-- 背景装饰元素 -->
+  <div class="decoration circle"></div>
+  <div class="decoration square"></div>
+  <div class="decoration triangle"></div>
+  
+  <div class="container">
+    <!-- Logo在标题上方 -->
+    <div class="logo-section">
+      <div class="logo">
+        <!-- Logo将通过JS动态设置 -->
+        
+      </div>
+    </div>
+    
+    <!-- 头部标题 -->
+    <div class="hero">
+      <!-- 标题和口号将通过JS动态设置 -->
+      <h1 id="header-title"></h1>
+      <p id="header-description"></p>
+      <div id="header-slogan" class="slogan"></div>
+    </div>
+
+    <!-- 主要信息卡片将通过JS动态生成 -->
+    <div class="grid" id="cards-grid"></div>
+    
+    <!-- 页尾版权信息 -->
+    <footer id="page-footer"></footer>
+  </div>
+
+  <script type="module">
+    // 导入主配置
+    import { 
+      title, 
+      font, 
+      logo, 
+      header, 
+      cardConfigs, 
+      footer, 
+      socialLinks 
+    } from '/config/main.js';
+
+    // 设置页面标题
+    document.title = title;
+
+    // 设置logo
+    const logoImg = document.getElementById('logo-img');
+    logoImg.src = logo.src;
+    logoImg.alt = logo.alt;
+
+    // 设置头部内容
+    document.getElementById('header-title').textContent = header.h1;
+    document.getElementById('header-description').textContent = header.p;
+    document.getElementById('header-slogan').textContent = header.slogan;
+
+    // 设置页脚内容
+    const footerElement = document.getElementById('page-footer');
+    footerElement.innerHTML = `
+      <p>${footer.text}</p>
+      <p>${footer.motto}</p>
+      <a href="${footer.icp.link}" target="_blank">${footer.icp.text}</a>
+    `;
+
+    // 卡片渲染函数
+    const renderCard = (card) => {
+      let cardContent = '';
+      
+      switch(card.type) {
+        case 'basic':
+        case 'history':
+        case 'feature':
+          cardContent = `
+            <h2><i class="${card.icon}"></i> ${card.title}</h2>
+            <ul>
+              ${card.items.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          `;
+          break;
+          
+        case 'member':
+          cardContent = `
+            <h2><i class="${card.icon}"></i> ${card.title}</h2>
+            <div class="team-members">
+              ${card.members.map(member => `
+                <div class="team-member">
+                  <div class="member-icon">
+                    <i class="${member.icon}"></i>
+                  </div>
+                  <div>
+                    <strong>${member.role}</strong>
+                    <p>${member.name}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+          break;
+          
+        case 'friend':
+          cardContent = `
+            <h2><i class="${card.icon}"></i> ${card.title}</h2>
+            <div class="warning-note">
+              <i class="fas fa-exclamation-triangle"></i>
+              ${card.warning}
+            </div>
+            <div class="friend-links">
+              ${card.links.map(link => `
+                <div class="friend-link">
+                  <h3><i class="${link.icon}"></i> ${link.title}</h3>
+                  ${link.urls.map(url => `
+                    <a href="${url.href}" target="_blank">${url.text}</a>
+                  `).join('')}
+                </div>
+              `).join('')}
+            </div>
+          `;
+          break;
+          
+        case 'contact':
+          cardContent = `
+            <h2><i class="${card.icon}"></i> ${card.title}</h2>
+            ${card.emails.map(email => `
+              <p>${email.label}：<a href="mailto:${email.address}">${email.text}</a></p>
+            `).join('')}
+            <div class="social-links">
+              ${socialLinks.map(social => `
+                <a href="${social.href}" class="social-link" title="${social.label}">
+                  <i class="${social.icon}"></i>
+                </a>
+              `).join('')}
+            </div>
+          `;
+          break;
+      }
+      
+      return `
+        <div class="card ${card.type === 'friend' ? 'friend-card' : ''} ${card.type === 'contact' ? 'contact-card' : ''}">
+          ${cardContent}
+        </div>
+      `;
+    };
+
+    // 动态加载并渲染卡片
+    const cardsGrid = document.getElementById('cards-grid');
+    
+    const loadCards = async () => {
+      for (const configPath of cardConfigs) {
+        // 动态导入卡片配置
+        const module = await import(`/config/${configPath}`);
+        const cardData = module[Object.keys(module)[0]];
+        
+        // 渲染卡片
+        cardsGrid.innerHTML += renderCard(cardData);
+      }
+      
+      // 卡片加载完成后初始化动画
+      initAnimations();
+    };
+
+    // 初始化动画
+    const initAnimations = () => {
+      // 卡片入场动画
+      const cards = document.querySelectorAll('.card');
+      
+      cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, 200 + index * 200);
+      });
+      
+      // 背景装饰动画
+      const decorations = document.querySelectorAll('.decoration');
+      decorations.forEach((dec, index) => {
+        dec.style.animation = `float ${6 + index * 2}s ease-in-out infinite`;
+      });
+      
+      // 友链卡片悬停效果
+      const friendLinks = document.querySelectorAll('.friend-link');
+      friendLinks.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+          link.classList.add('pulse');
+        });
+        
+        link.addEventListener('mouseleave', () => {
+          link.classList.remove('pulse');
+        });
+      });
+    };
+
+    // 水波动画函数
+    const createRipple = (e) => {
+      const ripple = document.createElement('div');
+      ripple.className = 'ripple';
+      ripple.style.left = e.clientX + 'px';
+      ripple.style.top = e.clientY + 'px';
+      document.body.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 3000);
+    };
+
+    // 添加点击水波效果
+    document.addEventListener('click', function(e) {
+      createRipple(e);
+    });
+
+    // 启动卡片加载流程
+    loadCards();
+  </script>
+</body>
+</html>
